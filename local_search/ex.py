@@ -1,7 +1,4 @@
-from multiprocessing import Value
 import random
-
-# "┌"  "─"  "┐"  "├"  "─"  "┤"  "└"  "─"  "┘"  "│" "┬ ┴ ┼"
 
 #lưu conflict
 class Conflict:
