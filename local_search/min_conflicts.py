@@ -1,4 +1,6 @@
 from multiprocessing import Value
+from do_thoi_gian import measure_time
+import copy
 import random
 
 # "┌"  "─"  "┐"  "├"  "─"  "┤"  "└"  "─"  "┘"  "│" "┬ ┴ ┼"
@@ -35,7 +37,7 @@ def count_conflict(row, column, value):
     return count     
 
  
-topic = [
+"""topic = [
     [8, 1, 7, 3, 6, 4, 2, 5, 9],
     [5, 9, 4, 1, 2, 8, 3, 6, 7],
     [3, 2, 6, 9, 5, 7, 1, 8, 4],
@@ -47,9 +49,9 @@ topic = [
     [7, 6, 8, 2, 4, 3, 9, 1, 5],
     [1, 5, 3, 6, 7, 9, 8, 4, 2],
     [9, 4, 2, 5, 8, 1, 6, 7, 3]
-]
+]"""
 
-tableConflict = [[False]*9 for _ in range(9)]
+"""tableConflict = [[False]*9 for _ in range(9)]"""
 
 def checkConflict(i, j):
     if tableConflict[i][j] == True: # True == conflict
@@ -109,7 +111,7 @@ def init_random():
             for j in range(3):
                 topic[row+i][col+j] = nums[k]
                 k += 1
-
+@measure_time
 def solve():
     for _ in range(50):  # restart 50 lần
         init_random()    # xáo lại bảng
@@ -123,7 +125,7 @@ def solve():
 def min_conflicts(max_steps = 1000000):
     #print(1)
     for step in range(max_steps):
-        print(step)
+        print(f"bước thứ: {step}")
         conflicted = [(i, j) for i in range(9) for j in range(9) if tableConflict[i][j]]
         if not conflicted: return
         i, j = random.choice(conflicted)
@@ -160,14 +162,22 @@ def print_table():
             print(topic[i][j], end = " ")
         print("\n")
 
-if __name__ == "__main__":
-    updateConflictTable()
-    solve()
-    if check():
-        print("Đã giải xong")
-        print_table()
-    else:
-        print("Không thể giải được")    
 
 
+
+@measure_time
+def solve_sudoku(input_topic):
+    global topic, tableConflict
+    
+    topic = copy.deepcopy(input_topic)
+    tableConflict = [[False]*9 for _ in range(9)]
+
+    for _ in range(50):  # restart
+        init_random()
+        updateConflictTable()
+        min_conflicts()
+        if check():
+            return topic  # trả kết quả
+
+    return None
 
