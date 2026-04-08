@@ -111,7 +111,6 @@ def init_random():
             for j in range(3):
                 topic[row+i][col+j] = nums[k]
                 k += 1
-@measure_time
 def solve():
     for _ in range(50):  # restart 50 lần
         updateConflictTable()
@@ -168,16 +167,10 @@ def print_table():
 @measure_time
 def solve_sudoku(input_topic):
     global topic, tableConflict
-    
+
     topic = copy.deepcopy(input_topic)
     tableConflict = [[False]*9 for _ in range(9)]
+    result=solve()
 
-    for _ in range(50):  # restart
-        """init_random()"""
-        updateConflictTable()
-        min_conflicts()
-        if check():
-            return topic  # trả kết quả
-
-    return None
+    return result
 
