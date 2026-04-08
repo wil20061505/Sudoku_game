@@ -114,11 +114,11 @@ def init_random():
 @measure_time
 def solve():
     for _ in range(50):  # restart 50 lần
-        init_random()    # xáo lại bảng
         updateConflictTable()
         min_conflicts()
         if check():
             return True
+           # xáo lại bảng
     return False
 
 # hàm giải thuật Min-Conflicts
@@ -173,7 +173,7 @@ def solve_sudoku(input_topic):
     tableConflict = [[False]*9 for _ in range(9)]
 
     for _ in range(50):  # restart
-        init_random()
+        """init_random()"""
         updateConflictTable()
         min_conflicts()
         if check():
